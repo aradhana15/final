@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+    <view-state id="start" view="shoppingcart.jsp">
+       <transition on="cartdetailsconfirmed" to="ordersummary"/>
+    </view-state>
+
+   
+    <view-state id="ordersummary" view="ordersummary.jsp" >
+        <transition on="edit" to="editshippingaddress" />
+        <transition on="submit" to="confirmorder"/>
+    </view-state>
+    
+    <view-state id="confirmorder" view="billing.jsp" model="model.Member">
+        <transition on="cancel" to="home" />
+        <transition on="submit" to="thankyou"/>
+    </view-state>
+
+    <end-state id="thankyou" view="thankyou.jsp" />
+    <end-state id="toHome" view="externalRedirect:contextRelative:index.jsp" />
+    <end-state id="toCancel" view="externalRedirect:contextRelative:index.jsp" />
+
+    <!-- these events are available in every state-->
+    <global-transitions>
+        <transition on="home" to="toHome" />
+        <transition on="cancel" to="toCancel" />
+    </global-transitions>
+
+</flow>
+            
